@@ -1,0 +1,65 @@
+syntax = "proto3";
+//package proto;
+option go_package =".;proto";
+import "google/protobuf/empty.proto";
+service User{
+  rpc GetUserList(PageInfo) returns(UserListResponse);//用户列表
+  rpc GetUserMobile(MobileRequest)returns(UserInfoResponse);//通过手机查询用户
+  rpc GetUserId(IdRequest)returns(UserInfoResponse);//通过手机查询用户
+  rpc CreateUserInfo(CreateUserRequest)returns(UserInfoResponse);//创建用户用户
+  rpc EditUserInfo(EditUserRequest)returns(google.protobuf.Empty);//更新用户用户
+  rpc CheckPassword(PasswordCheckInfo)returns(CheckResponse);//验证密码
+}
+
+message PasswordCheckInfo{
+  string password = 1;
+  string encryptedPassword = 2;
+}
+
+message PageInfo {
+  uint32 page = 1;
+  uint32 size = 2;
+
+}
+
+message CheckResponse {
+bool success = 1;
+
+}
+
+message MobileRequest{
+  string mobile = 1;
+
+}
+message IdRequest{
+  int64 id = 1;
+
+}
+message CreateUserRequest{
+  string nickName = 1;
+  string password = 2;
+  string mobile = 3;
+}
+
+message EditUserRequest{
+  int64 id = 1;
+  string nickName = 2;
+  uint64 birthday = 3;
+  int32 sex = 4;
+}
+
+message UserInfoResponse{
+  int64 id = 1;
+  string password = 2;
+  string mobile = 3;
+  string nickName = 4;
+  uint64 birthday = 5;
+  int32 sex = 6;
+  int32 role = 7;
+
+}
+message UserListResponse{
+  int64 total = 1;
+  repeated UserInfoResponse data = 2;
+
+}
